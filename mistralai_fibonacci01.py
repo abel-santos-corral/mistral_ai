@@ -1,16 +1,16 @@
-import yaml
+import os
+from dotenv import load_dotenv
 from mistralai import Mistral
 
-# Chemin vers le fichier settings.yml
-file_path = 'data/input/settings.yml'
+# Load environment variables from .env
+load_dotenv()
 
-# Lire le fichier YAML
-with open(file_path, 'r') as file:
-    settings = yaml.safe_load(file)
+# Get the Mistral API key from environment variables
+api_key = os.getenv("MISTRAL_API_KEY")
+if not api_key:
+    raise ValueError("Mistral API key not found in environment variables.")
 
-api_key = settings.get('MISTRAL_API_KEY')
 client = Mistral(api_key=api_key)
-
 model = "codestral-latest"
 prompt = "def fibonacci(n: int):"
 suffix = "n = int(input('Enter a number: '))\nprint(fibonacci(n))"

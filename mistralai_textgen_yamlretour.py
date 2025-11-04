@@ -1,3 +1,10 @@
+"""
+Module for generating YAML data of European countries using Mistral AI.
+
+This module connects to the Mistral AI API to generate a list of European countries
+with their official languages and capitals, then saves the result as a YAML file.
+"""
+
 import os
 import yaml
 from dotenv import load_dotenv
@@ -11,11 +18,11 @@ api_key = os.getenv("MISTRAL_API_KEY")
 if not api_key:
     raise ValueError("Mistral API key not found in environment variables.")
 
-model = "mistral-large-latest"
+MODEL = "mistral-large-latest"
 client = Mistral(api_key=api_key)
 
 chat_response = client.chat.complete(
-    model=model,
+    model=MODEL,
     messages=[
         {
             "role": "user",
@@ -42,25 +49,29 @@ print(chat_response.choices[0].message.content)
 response_content = chat_response.choices[0].message.content
 
 # Rechercher les délimiteurs YAML
-start_marker = "```yaml"
-end_marker = "```"
-start_index = response_content.find(start_marker)
-end_index = response_content.find(end_marker, start_index + len(start_marker))
+START_MARKER = "```yaml"
+END_MARKER = "```"
+start_index = response_content.find(START_MARKER)
+end_index = response_content.find(END_MARKER, start_index + len(START_MARKER))
 
 if start_index != -1 and end_index != -1:
     # Extraire le contenu YAML
-    yaml_content = response_content[start_index + len(start_marker):end_index].strip()
+    yaml_content = response_content[start_index + len(START_MARKER):end_index].strip()
     try:
         # Vérifier si le contenu est un YAML valide
         yaml_data = yaml.safe_load(yaml_content)
+
         # Chemin pour enregistrer le fichier de sortie
-        output_path = 'data/output/pays_europeens.yml'
+        OUTPUT_PATH = 'data/output/pays_europeens.yml'
+
         # Assurez-vous que le dossier de sortie existe
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+
         # Enregistrer le contenu YAML dans un fichier
-        with open(output_path, 'w') as output_file:
+        with open(OUTPUT_PATH, 'w', encoding='utf-8') as output_file:
             yaml.dump(yaml_data, output_file, allow_unicode=True)
-        print(f"Le fichier a été enregistré avec succès à {output_path}")
+
+        print(f"Le fichier a été enregistré avec succès à {OUTPUT_PATH}")
     except yaml.YAMLError as e:
         print("Le contenu extrait n'est pas un YAML valide:", e)
 else:

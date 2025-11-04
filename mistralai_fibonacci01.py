@@ -1,3 +1,6 @@
+"""
+Module for generating Fibonacci function code using Mistral AI's FIM completion.
+"""
 import os
 from dotenv import load_dotenv
 from mistralai import Mistral
@@ -11,22 +14,23 @@ if not api_key:
     raise ValueError("Mistral API key not found in environment variables.")
 
 client = Mistral(api_key=api_key)
-model = "codestral-latest"
-prompt = "def fibonacci(n: int):"
-suffix = "n = int(input('Enter a number: '))\nprint(fibonacci(n))"
+
+MODEL = "codestral-latest"
+PROMPT = "def fibonacci(n: int):"
+SUFFIX = "n = int(input('Enter a number: '))\nprint(fibonacci(n))"
 
 response = client.fim.complete(
-    model=model,
-    prompt=prompt,
-    suffix=suffix,
+    model=MODEL,
+    prompt=PROMPT,
+    suffix=SUFFIX,
     temperature=0,
     top_p=1,
 )
 
 print(
     f"""
-{prompt}
+{PROMPT}
 {response.choices[0].message.content}
-{suffix}
+{SUFFIX}
 """
 )

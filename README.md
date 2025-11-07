@@ -38,6 +38,12 @@ To configure VS Code and get your environment ready, follow these steps.
       venv\Scripts\activate
       ```
 
+Alternatively use the script:
+```
+chmod +x init_project.sh
+./init_project.sh
+```
+
 # Agent example
 
 For the example of the basic usage of an agent, this was used: 

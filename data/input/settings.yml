@@ -1,0 +1,6 @@
+prompts:
+  prompt_extract_sections: >
+    Analyze the following PDF document and extract all sections.
+    Return a structured list of sections with their titles and content.
+    Format the output as a JSON list: [{"title": "...", "content": "..."}, ...].
+    If no sections are found, return an empty list.

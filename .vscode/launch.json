@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug mistralai_basic_agent",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/mistralai_basic_agent.py",
+            "console": "integratedTerminal",
+            "args": [
+                "How can I remove duplicates from a list"
+            ]
+        }
+    ]
+}

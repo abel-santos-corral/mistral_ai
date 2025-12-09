@@ -169,3 +169,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore all files in logs and pdf directories, but keep the directories themselves
+data/logs/*
+!data/logs/.gitkeep
+data/input/pdf/*
+!data/input/pdf/.gitkeep
